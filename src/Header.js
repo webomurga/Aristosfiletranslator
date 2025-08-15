@@ -38,6 +38,24 @@ const Header = ({ user, setUser, isLoginModalOpen, setIsLoginModalOpen }) => {
   };
 
   const handleLogin = async () => {
+    // Simulate login for demo user
+    if (email === 'demo@example.com' && password === '1234Abc#') {
+      const demoToken = 'demo-token';
+      const demoEmail = 'demo@example.com';
+  
+      localStorage.setItem('token', demoToken);
+      localStorage.setItem('email', demoEmail);
+      setUser({ email: demoEmail });
+  
+      setAlert({
+        type: 'success',
+        message: `Logged in as demo user!`,
+      });
+      setIsLoginModalOpen(false);
+  
+      return;
+    }
+    
     try {
       const response = await axios.post('http://localhost:3000/auth/login', { email, password });
       const token = response.data.token;
